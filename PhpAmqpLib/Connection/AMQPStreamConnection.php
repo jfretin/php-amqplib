@@ -16,12 +16,13 @@ class AMQPStreamConnection extends AbstractConnection
                                 $locale="en_US",
                                 $connection_timeout = 3,
                                 $read_write_timeout = 3,
-                                $context = null)
+                                $context = null,
+                                $clientIdentifier = '')
     {
     	$io = new StreamIO($host, $port, $connection_timeout, $read_write_timeout, $context);
         $this->sock = $io->get_socket();
 
-        parent::__construct($user, $password, $vhost, $insist, $login_method, $login_response, $locale, $io);
+        parent::__construct($user, $password, $vhost, $insist, $login_method, $login_response, $locale, $io, $clientIdentifier);
         
         // save the params for the use of __clone, this will overwrite the parent
         $this->construct_params = func_get_args();

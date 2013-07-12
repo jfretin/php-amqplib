@@ -15,8 +15,8 @@ use PhpAmqpLib\Wire\IO\AbstractIO;
 class AbstractConnection extends AbstractChannel
 {
     public static $LIBRARY_PROPERTIES = array(
-        "library" => array('S', "PHP AMQP Lib"),
-        "library_version" => array('S', "2.0")
+        "product" => array('S', "PHP AMQP Lib"),
+        "version" => array('S', "2.0")
     );
 
     /**
@@ -40,7 +40,8 @@ class AbstractConnection extends AbstractChannel
                                 $login_method="AMQPLAIN",
                                 $login_response=null,
                                 $locale="en_US",
-                                AbstractIO $io)
+                                AbstractIO $io,
+                                $clientIdentifier="")
     {
     	// save the params for the use of __clone
         $this->construct_params = func_get_args();
@@ -55,6 +56,7 @@ class AbstractConnection extends AbstractChannel
         }
 
         $d = self::$LIBRARY_PROPERTIES;
+        $d['client_identifier'] = array('S', $clientIdentifier);
         while (true) {
             $this->channels = array();
             // The connection object itself is treated as channel 0
