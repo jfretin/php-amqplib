@@ -41,6 +41,10 @@ class StreamIO extends AbstractIO
 
         while ($read < $n && !feof($this->sock) &&
             (false !== ($buf = fread($this->sock, $n - $read)))) {
+                
+            if ($buf === '') {
+                continue;
+            }
 
             $read += strlen($buf);
             $res .= $buf;
